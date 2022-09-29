@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <BrowserRouter>
+    //   <GlobalStyles />
+    //   <UserContext.Provider value={userContext}>
+    //     {showHeader ? <Header /> : <></>}
+    //     <Routes>
+    //       <Route
+    //         element={<PublicRoute auth={localStorage.getItem("isLogged")} />}
+    //       >
+    //         <Route path="/" element={<Login />} />
+    //         <Route path="/sign-up" element={<SignUp />} />
+    //       </Route>
+    //       <Route
+    //         element={<PrivateRoute auth={localStorage.getItem("isLogged")} />}
+    //       >
+    //         <Route path="/hashtag/:hashtag" element={<HashTag />} />
+    //         <Route path="/timeline" element={<Timeline />} />
+    //         <Route path="/user/:id" element={<UserPage />} />
+    //       </Route>
+    //     </Routes>
+    //   </UserContext.Provider>
+    // </BrowserRouter>
+    "helloworld"
   );
 }
 
