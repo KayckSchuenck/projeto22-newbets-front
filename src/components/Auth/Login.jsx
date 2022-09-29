@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import axios from "axios";
-import UserContext from "../../context/userContext.js";
+import UserContext from "../Context/userContext";
 
-export function Login() {
+export default function Login() {
   const navigate = useNavigate();
-  const { setToken, setImage, setName, setShowHeader, setId } = useContext(UserContext);
+  const { setToken, setName, setId } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
   function clearLoginInputs() {
@@ -37,11 +37,13 @@ export function Login() {
       .post(`${process.env.REACT_APP_API_BASE_URL}/login`, loginPost)
       .then((res) => {
         localStorage.setItem("isLogged",JSON.stringify({
-            name:res.data.username,
+            name:res.data.name,
             token:res.data.token,
+            id:res.data.id
         }));
-        setName(res.data.username);
+        setName(res.data.name);
         setToken(res.data.token);
+        setId(res.data.id)
         navigate("/main");
       })
       .catch((error) => {
