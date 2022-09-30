@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import axios from "axios";
-import UserContext from "../Context/userContext";
+import UserContext from "../../components/Context/userContext";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -55,8 +55,8 @@ export default function Login() {
   return (
     <Container>
       <Left>
-        <span>linkr</span>
-        <p>save, share and discover the best links on the web</p>
+        <span>NewBets</span>
+        <p>Para apostar, todo lugar é possível</p>
       </Left>
 
       <Rigth>

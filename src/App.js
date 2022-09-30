@@ -1,7 +1,13 @@
-import Login from "./components/Auth/Login";
-import SignUp from "./components/Auth/SignUp";
-import UserContext from "./components/Context/userContext";
 import { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import GlobalStyles from "./GlobalStyles";
+import Login from "./Pages/Auth/Login";
+import SignUp from "./Pages/Auth/Login";
+import UserContext from "./components/Context/userContext";
+import PublicRoute from "./components/Routes/PublicRoute";
+import PrivateRoute from "./components/Routes/PrivateRoute";
+import Main from "./Pages/Main/Main";
+import AllLeagueGames from "./components/BetUtils/AllLeagueGames";
 
 function App() {
   const [token, setToken] = useState();
@@ -21,7 +27,6 @@ function App() {
     <BrowserRouter>
       <GlobalStyles />
       <UserContext.Provider value={userContext}>
-        <Header />
         <Routes>
           <Route
             element={<PublicRoute auth={localStorage.getItem("isLogged")} />}
@@ -32,7 +37,8 @@ function App() {
           <Route
             element={<PrivateRoute auth={localStorage.getItem("isLogged")} />}
           >
-            <Route path="/main" element={<Main />} />
+            <Route path="/" element={<Main />} />
+            <Route path="/leagues/:id" element={<AllLeagueGames />} />
           </Route>
         </Routes>
       </UserContext.Provider>

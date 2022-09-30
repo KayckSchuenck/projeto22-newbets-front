@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useContext } from "react";
-import UserContext from "../../context/userContext.js";
+import UserContext from "../Context/userContext";
 
 export default function PublicRoute({ auth }) {
   const { setToken, setName, setId } = useContext(UserContext);
