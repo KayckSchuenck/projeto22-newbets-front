@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import axios from "axios";
-import Games from "./Games";
+import Dates from "./Dates";
 
-export default function () {
+export default function AllLeagueGames() {
   const [gamesData, setGamesData] = useState();
   const { id } = useParams();
   const date = dayjs().format("YYYY-MM-DD");
@@ -21,7 +21,20 @@ export default function () {
         `${process.env.REACT_APP_EXTERNAL_API_BASE_URL}/fixtures?season=2022&status=NS&league=${id}&from=${date}&to=2022-10-05`,
         config
       );
-      setGamesData(result.response);
+      const hashtable = {};
+      result.response.forEach((e) => {
+        const day = e.fixture.date.slice(0, 10);
+        if (hashtable[day]) {
+          hashtable[day].games.push({ ...e.teams, gameId: e.fixture.id });
+        } else
+          hashtable[day] = {
+            games: [{ ...e.teams, gameId: e.fixture.id }],
+            date: day,
+          };
+      });
+      const grouped = Object.values(hashtable);
+
+      setGamesData(grouped);
     } catch (erro) {
       console.log(erro);
     }
@@ -37,13 +50,7 @@ export default function () {
     <>
       <Block>
         {gamesData.map((e, index) => (
-          <Games
-            home={e.teams.home.name}
-            homeLogo={e.teams.home.logo}
-            key={index}
-            awayLogo={e.teams.away.logo}
-            away={e.teams.away.name}
-          />
+          <Dates date={e.date} key={index} games={e.games} id={id} />
         ))}
       </Block>
     </>
