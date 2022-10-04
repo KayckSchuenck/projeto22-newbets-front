@@ -44,7 +44,7 @@ export default function Login() {
         setName(res.data.name);
         setToken(res.data.token);
         setId(res.data.id)
-        navigate("/main");
+        navigate(-1);
       })
       .catch((error) => {
         alert(`${error.response.data}`);

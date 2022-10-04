@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import axios from "axios";
-import Dates from "./Dates";
+import Dates from "../../components/BetUtils/Dates";
 
 export default function AllLeagueGames() {
   const [gamesData, setGamesData] = useState();
