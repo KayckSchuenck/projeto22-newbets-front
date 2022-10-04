@@ -15,12 +15,14 @@ export default function Games({
 }) {
   const navigate = useNavigate();
   const { token, id } = useContext(UserContext);
-  const [amount, setAmount] = useState();
+  const [amount, setAmount] = useState(0);
   const [selectedHome, setSelectedHome] = useState();
   const [selectedAway, setSelectedAway] = useState();
   const link = `/markets/${fixtureId}`;
 
-  function handleBet(homeAway) {
+  function handleBetHome(e) {
+    e.prevent.default();
+
     if (!token) {
       alert("Por favor efetue seu login");
       navigate("/login");
@@ -30,62 +32,107 @@ export default function Games({
       Authorization: `Bearer ${token}`,
     };
 
-    let odd;
-    if ((homeAway = "home")) odd = homeOdd;
-    if ((homeAway = "away")) odd = awayOdd;
+    const userBet = {
+      amount,
+      fixtureId,
+      odd: homeOdd,
+      value: "home",
+      userId: id,
+    };
+
+    axios.post(
+      `${process.env.REACT_APP_API_BASE_URL}/bets/options`,
+      userBet,
+      config
+    );
+    setSelectedHome();
+  }
+
+  function handleBetAway(e) {
+    e.prevent.default();
+
+    if (!token) {
+      alert("Por favor efetue seu login");
+      navigate("/login");
+    }
+
+    const config = {
+      Authorization: `Bearer ${token}`,
+    };
 
     const userBet = {
       amount,
       fixtureId,
-      odd,
-      value: homeAway,
+      odd: awayOdd,
+      value: "away",
       userId: id,
     };
 
-    axios.post(`${REACT_APP_API_BASE_URL}/bets/options`, userBet, config);
+    axios.post(
+      `${process.env.REACT_APP_API_BASE_URL}/bets/options`,
+      userBet,
+      config
+    );
     setSelectedAway();
-    setSelectedHome();
   }
 
   return (
-    <Box>
-      <Flex>
-        <span>{homeOdd}</span>
-        {home} <img src={homeLogo} />
-      </Flex>
+    <>
+      <Box>
+        <Flex>
+          <span
+            onClick={() => {
+              setSelectedHome(!selectedHome);
+              setSelectedAway(false);
+            }}
+          >
+            {homeOdd}
+          </span>
+          {home} <img src={homeLogo} />
+        </Flex>
+
+        <Flex>
+          <Link to={link}>Outros mercados</Link>
+        </Flex>
+
+        <Flex>
+          <span
+            onClick={() => {
+              setSelectedHome(false);
+              setSelectedAway(!selectedAway);
+            }}
+          >
+            {awayOdd}
+          </span>
+          {away} <img src={awayLogo} />
+        </Flex>
+      </Box>
       {selectedHome ? (
-        <Form onSubmit={() => handleBet("home")}>
-          <input
-            type="number"
-            placeholder="0.00"
-            value={amount}
-            required
-            onChange={() => setAmount([...amount, e.target.value])}
-          />
-          <span>Retorno esperado={amount * homeOdd}</span>
-
-          <button type="submit">Faça já sua aposta</button>
-        </Form>
-      ) : (
-        <></>
-      )}
-
-      <Flex>
-        <Link to={link}>Outros mercados</Link>
-      </Flex>
-
-      <Flex>
-        <span>{awayOdd}</span> {away} <img src={awayLogo} />
-      </Flex>
-      {selectedAway ? (
-        <Form onSubmit={() => handleBet("away")}>
+        <Form onSubmit={handleBetHome}>
           <BetFlex>
             <input
               type="number"
               placeholder="0.00"
               value={amount}
               required
-              onChange={() => setAmount([...amount, e.target.value])}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+            <span>Retorno esperado={amount * homeOdd}</span>
+          </BetFlex>
+          <button type="submit">Faça já sua aposta</button>
+        </Form>
+      ) : (
+        <></>
+      )}
+      {selectedAway ? (
+        <Form onSubmit={handleBetAway}>
+          <BetFlex>
+            <input
+              type="number"
+              placeholder="0.00"
+              value={amount}
+              required
+              onChange={(e) => setAmount(e.target.value)}
             />
             <span>Retorno esperado={amount * awayOdd}</span>
           </BetFlex>
@@ -94,7 +141,7 @@ export default function Games({
       ) : (
         <></>
       )}
-    </Box>
+    </>
   );
 }
 
@@ -129,6 +176,10 @@ const Flex = styled.div`
 const BetFlex = styled.div`
   display: flex;
   align-items: center;
+
+  span {
+    color: white;
+  }
 `;
 
 const Form = styled.form`
@@ -136,4 +187,7 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  input {
+    background-color: #151515;
+  }
 `;

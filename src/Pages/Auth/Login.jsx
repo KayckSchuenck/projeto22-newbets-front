@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import axios from "axios";
 import UserContext from "../../components/Context/userContext";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ export default function Login() {
         navigate(-1);
       })
       .catch((error) => {
-        alert(`${error.response.data}`);
+        console.log(error)
         setLoading(false);
       });
   }
@@ -77,7 +78,10 @@ export default function Login() {
             onChange={handleForm}
             required
           />
-          <button type="submit">Log In</button>
+          <button type="submit" disabled={loading} >
+          {loading ? <ThreeDots /> : <>Login</>}
+          </button>
+          
           <Link to="/sign-up">First time? Create an account!</Link>
         </Form>
       </Rigth>

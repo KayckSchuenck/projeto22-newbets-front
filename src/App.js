@@ -2,11 +2,12 @@ import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import Login from "./Pages/Auth/Login";
-import SignUp from "./Pages/Auth/Login";
+import SignUp from "./Pages/Auth/SignUp";
 import UserContext from "./components/Context/userContext";
 import BetContext from "./components/Context/betContext";
 import Main from "./Pages/Main/Main";
-import AllLeagueGames from "./components/BetUtils/AllLeagueGames";
+import AllLeagueGames from "./Pages/AllLeagueGames/AllLeagueGames";
+import AllMarkets from "./Pages/AllMarkets/AllMarkets";
 
 function App() {
   const [token, setToken] = useState();

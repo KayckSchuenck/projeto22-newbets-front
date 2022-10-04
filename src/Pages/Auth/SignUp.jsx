@@ -33,12 +33,12 @@ export default function SignUp() {
     setPostForm(clearSignUpInputs);
 
     const promise = axios.post(
-      `${process.env.REACT_APP_API_BASE_URL}/signup`,
+      `${process.env.REACT_APP_API_BASE_URL}/sign-up`,
       postForm
     );
     promise
       .then(() => {
-        navigate("/");
+        navigate("/login");
       })
       .catch((erro) => {
         console.log(erro);
@@ -98,7 +98,7 @@ export default function SignUp() {
           <button type="submit" disabled={loading}>
             {loading ? <ThreeDots /> : <>Sign Up</>}
           </button>
-          <Link to="/">Switch back to log in</Link>
+          <Link to="/login">Switch back to log in</Link>
         </Form>
       </Rigth>
     </Container>
