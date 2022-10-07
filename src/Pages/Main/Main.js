@@ -19,23 +19,23 @@ export default function Main() {
       );
       const hashtable = {};
       result.response
-        .filter((e) => e.seasons[0].coverage.odds)
-        .sort((a, b) => {
-          if (a.country.name > b.country.name) return 1;
+        .filter((elem) => elem.seasons[0].coverage.odds)
+        .sort((prev, next) => {
+          if (prev.country.name > next.country.name) return 1;
           else return -1;
         })
-        .forEach((e) => {
-          if (hashtable[e.country.name]) {
-            hashtable[e.country.name].leagues.push(e.league);
+        .forEach((leagues) => {
+          if (hashtable[leagues.country.name]) {
+            hashtable[leagues.country.name].leagues.push(leagues.league);
           } else
-            hashtable[e.country.name] = {
-              leagues: [e.league],
-              name: e.country.name,
-              flag: e.country.flag,
+            hashtable[leagues.country.name] = {
+              leagues: [leagues.league],
+              name: leagues.country.name,
+              flag: leagues.country.flag,
             };
         });
-      const grouped = Object.values(hashtable);
-      setLeagueData(grouped);
+      const groupedLeagues = Object.values(hashtable);
+      setLeagueData(groupedLeagues);
     } catch (erro) {
       console.log(erro);
     }

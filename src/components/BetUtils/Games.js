@@ -183,7 +183,7 @@ const Flex = styled.div`
   width: 30vw;
 `;
 
-const BetFlex = styled.div`
+export const BetFlex = styled.div`
   display: flex;
   align-items: center;
 
@@ -192,7 +192,7 @@ const BetFlex = styled.div`
   }
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;

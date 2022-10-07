@@ -12,37 +12,26 @@ import AllMarkets from "./Pages/AllMarkets/AllMarkets";
 function App() {
   const [token, setToken] = useState();
   const [name, setName] = useState();
-  const [id, setId] = useState();
-  const [betsArray, setBetsArray] = useState([]);
 
   const userContext = {
     token,
     setToken,
     name,
     setName,
-    id,
-    setId,
-  };
-
-  const betContext = {
-    betsArray,
-    setBetsArray,
   };
 
   return (
     <BrowserRouter>
       <GlobalStyles />
-      <BetContext.Provider value={betContext}>
-        <UserContext.Provider value={userContext}>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/" element={<Main />} />
-            <Route path="/leagues/:id" element={<AllLeagueGames />} />
-            <Route path="/markets/:fixtureId" element={<AllMarkets />} />
-          </Routes>
-        </UserContext.Provider>
-      </BetContext.Provider>
+      <UserContext.Provider value={userContext}>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/" element={<Main />} />
+          <Route path="/leagues/:id" element={<AllLeagueGames />} />
+          <Route path="/markets/:fixtureId" element={<AllMarkets />} />
+        </Routes>
+      </UserContext.Provider>
     </BrowserRouter>
   );
 }
