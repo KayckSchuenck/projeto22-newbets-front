@@ -18,16 +18,6 @@ export default createGlobalStyle`
         cursor: pointer;
     }
     html, body, #root {
-        background-color:#333333;
-    }
-    :root {
-        --primary-color: #171717;
-        --secondary-color:#FFFFFF;
-        --color-input: #EFEFEF;
-        --color-header:#151515;
-        --color-button: #1877F2;
-        --primary-font: "Lato", sans-serif;
-        --secondary-font: "Oswald", sans-serif;
-        --thirdy-font: 'Passion One', cursive;
+        background-color:#585858;
     }
 `;

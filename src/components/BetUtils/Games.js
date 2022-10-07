@@ -21,59 +21,64 @@ export default function Games({
   const link = `/markets/${fixtureId}`;
 
   function handleBetHome(e) {
-    e.prevent.default();
+    e.preventDefault();
 
     if (!token) {
       alert("Por favor efetue seu login");
       navigate("/login");
+    } else {
+      const config = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const userBet = {
+        amount,
+        fixtureId,
+        odd: homeOdd,
+        value: "home",
+        userId: id,
+      };
+      axios
+        .post(
+          `${process.env.REACT_APP_API_BASE_URL}/bets/options`,
+          userBet,
+          config
+        )
+        .then(() => alert("Aposta efetuada com sucesso"))
+        .catch((erro) => console.log(erro));
+      setSelectedHome();
     }
-
-    const config = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    const userBet = {
-      amount,
-      fixtureId,
-      odd: homeOdd,
-      value: "home",
-      userId: id,
-    };
-
-    axios.post(
-      `${process.env.REACT_APP_API_BASE_URL}/bets/options`,
-      userBet,
-      config
-    );
-    setSelectedHome();
   }
 
   function handleBetAway(e) {
-    e.prevent.default();
+    e.preventDefault();
 
     if (!token) {
       alert("Por favor efetue seu login");
       navigate("/login");
+    } else {
+      const config = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const userBet = {
+        amount,
+        fixtureId,
+        odd: awayOdd,
+        value: "away",
+        userId: id,
+      };
+
+      axios
+        .post(
+          `${process.env.REACT_APP_API_BASE_URL}/bets/options`,
+          userBet,
+          config
+        )
+        .then(() => alert("Aposta efetuada com sucesso"))
+        .catch((erro) => console.log(erro));
+      setSelectedAway();
     }
-
-    const config = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    const userBet = {
-      amount,
-      fixtureId,
-      odd: awayOdd,
-      value: "away",
-      userId: id,
-    };
-
-    axios.post(
-      `${process.env.REACT_APP_API_BASE_URL}/bets/options`,
-      userBet,
-      config
-    );
-    setSelectedAway();
   }
 
   return (
@@ -88,11 +93,13 @@ export default function Games({
           >
             {homeOdd}
           </span>
-          {home} <img src={homeLogo} />
+          {home} <img src={homeLogo} alt={"logo"} />
         </Flex>
 
         <Flex>
-          <Link to={link}>Outros mercados</Link>
+          <Link to={link} state={{ home, away }}>
+            Outros mercados
+          </Link>
         </Flex>
 
         <Flex>
@@ -104,20 +111,22 @@ export default function Games({
           >
             {awayOdd}
           </span>
-          {away} <img src={awayLogo} />
+          {away} <img src={awayLogo} alt={"logo"} />
         </Flex>
       </Box>
       {selectedHome ? (
         <Form onSubmit={handleBetHome}>
+          {home} - {homeOdd}
+          Resultado final
           <BetFlex>
             <input
               type="number"
-              placeholder="0.00"
+              placeholder="R$ 0.00"
               value={amount}
               required
               onChange={(e) => setAmount(e.target.value)}
             />
-            <span>Retorno esperado={amount * homeOdd}</span>
+            <span>Retorno esperado={(amount * homeOdd).toFixed(2)}</span>
           </BetFlex>
           <button type="submit">Faça já sua aposta</button>
         </Form>
@@ -126,6 +135,7 @@ export default function Games({
       )}
       {selectedAway ? (
         <Form onSubmit={handleBetAway}>
+          {away} - {awayOdd}
           <BetFlex>
             <input
               type="number"
@@ -134,7 +144,7 @@ export default function Games({
               required
               onChange={(e) => setAmount(e.target.value)}
             />
-            <span>Retorno esperado={amount * awayOdd}</span>
+            <span>Retorno esperado={(amount * awayOdd).toFixed(2)}</span>
           </BetFlex>
           <button type="submit">Faça já sua aposta</button>
         </Form>
@@ -178,7 +188,7 @@ const BetFlex = styled.div`
   align-items: center;
 
   span {
-    color: white;
+    color: black;
   }
 `;
 
@@ -187,7 +197,20 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: white;
   input {
-    background-color: #151515;
+    background-color: rgba(0, 0, 0, 0);
+    border: solid 1px #367a65;
+    padding: 3px;
+    border-radius: 5px;
+    width: 10vw;
+    margin: 0 5px 5px 0;
+  }
+  button {
+    margin-bottom: 5px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: gray;
+    color: white;
   }
 `;

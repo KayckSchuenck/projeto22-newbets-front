@@ -13,9 +13,11 @@ export default function Dates({ date, games, id }) {
 
   function createHashtable(data) {
     const hashtable = {};
+
     games.forEach((game) => {
       hashtable[game.gameId] = game;
     });
+
     data.forEach((odd) => {
       if (hashtable[odd.fixture.id]) {
         hashtable[odd.fixture.id] = {
@@ -25,6 +27,7 @@ export default function Dates({ date, games, id }) {
         };
       }
     });
+
     const gameDataWithOdds = Object.values(hashtable);
     setGameOdds(gameDataWithOdds);
   }
@@ -35,11 +38,17 @@ export default function Dates({ date, games, id }) {
         ["x-rapidapi-key"]: process.env.REACT_APP_API_KEY,
       },
     };
+
     try {
       const { data: result } = await axios.get(
-        `${process.env.REACT_APP_EXTERNAL_API_BASE_URL}/odds?bookmaker=8&season=2022&date=${date}&league=${id}&bet=2`,
+        `${process.env.REACT_APP_EXTERNAL_API_BASE_URL}/odds?season=2022&date=${date}&league=${id}&bet=2`,
         config
       );
+
+      if (!result.response.length) {
+        alert("Sem jogos disponíveis para essa data");
+      }
+
       createHashtable(result.response);
     } catch (erro) {
       console.log(erro);
@@ -69,6 +78,7 @@ export default function Dates({ date, games, id }) {
       </Flex1>
       {selected && gameOdds ? (
         gameOdds.map((game, index) => {
+          if (!game.odds) return null;
           return (
             <Games
               home={game.home.name}
