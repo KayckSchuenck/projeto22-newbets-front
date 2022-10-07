@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import axios from "axios";
-import UserContext from "../Context/userContext";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import postBet from "../Utils/postBet";
 
 export default function Games({
   home,
@@ -13,8 +12,6 @@ export default function Games({
   awayOdd,
   fixtureId,
 }) {
-  const navigate = useNavigate();
-  const { token, id } = useContext(UserContext);
   const [amount, setAmount] = useState(0);
   const [selectedHome, setSelectedHome] = useState();
   const [selectedAway, setSelectedAway] = useState();
@@ -23,62 +20,27 @@ export default function Games({
   function handleBetHome(e) {
     e.preventDefault();
 
-    if (!token) {
-      alert("Por favor efetue seu login");
-      navigate("/login");
-    } else {
-      const config = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      const userBet = {
-        amount,
-        fixtureId,
-        odd: homeOdd,
-        value: "home",
-        userId: id,
-      };
-      axios
-        .post(
-          `${process.env.REACT_APP_API_BASE_URL}/bets/options`,
-          userBet,
-          config
-        )
-        .then(() => alert("Aposta efetuada com sucesso"))
-        .catch((erro) => console.log(erro));
-      setSelectedHome();
-    }
+    const userBet = {
+      amount,
+      fixtureId,
+      odd: homeOdd,
+      value: "home",
+    };
+    postBet(userBet, "options");
+    setSelectedHome();
   }
 
   function handleBetAway(e) {
     e.preventDefault();
+    const userBet = {
+      amount,
+      fixtureId,
+      odd: awayOdd,
+      value: "away",
+    };
 
-    if (!token) {
-      alert("Por favor efetue seu login");
-      navigate("/login");
-    } else {
-      const config = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      const userBet = {
-        amount,
-        fixtureId,
-        odd: awayOdd,
-        value: "away",
-        userId: id,
-      };
-
-      axios
-        .post(
-          `${process.env.REACT_APP_API_BASE_URL}/bets/options`,
-          userBet,
-          config
-        )
-        .then(() => alert("Aposta efetuada com sucesso"))
-        .catch((erro) => console.log(erro));
-      setSelectedAway();
-    }
+    postBet(userBet, "options");
+    setSelectedAway();
   }
 
   return (

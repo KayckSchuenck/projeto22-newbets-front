@@ -4,26 +4,29 @@ import GlobalStyles from "./GlobalStyles";
 import Login from "./Pages/Auth/Login";
 import SignUp from "./Pages/Auth/SignUp";
 import UserContext from "./components/Context/userContext";
-import BetContext from "./components/Context/betContext";
 import Main from "./Pages/Main/Main";
 import AllLeagueGames from "./Pages/AllLeagueGames/AllLeagueGames";
 import AllMarkets from "./Pages/AllMarkets/AllMarkets";
+import Header from "./components/Header/Header";
 
 function App() {
   const [token, setToken] = useState();
   const [name, setName] = useState();
-
+  const [availableAmount, setAvailableAmount] = useState();
   const userContext = {
     token,
     setToken,
     name,
     setName,
+    availableAmount,
+    setAvailableAmount,
   };
 
   return (
     <BrowserRouter>
       <GlobalStyles />
       <UserContext.Provider value={userContext}>
+        <Header />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />

@@ -20,4 +20,5 @@ export default createGlobalStyle`
     html, body, #root {
         background-color:#585858;
     }
+    font-family: 'Roboto', sans-serif;
 `;

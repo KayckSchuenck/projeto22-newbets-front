@@ -1,9 +1,7 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { BetFlex, Form } from "../Games";
-import UserContext from "../../Context/userContext";
-import CheckToken from "../../Utils/checkToken";
+import postBet from "../../Utils/postBet";
 
 export default function Corners({
   odd,
@@ -18,7 +16,6 @@ export default function Corners({
 
   function handleBetCorners(e) {
     e.preventDefault();
-    const config = CheckToken();
     const userBet = {
       amount,
       fixtureId,
@@ -27,17 +24,8 @@ export default function Corners({
       type,
     };
 
-    axios
-      .post(
-        `${process.env.REACT_APP_API_BASE_URL}/bets/corners`,
-        userBet,
-        config
-      )
-      .then(() => {
-        alert("Aposta efetuada com sucesso");
-        setCorners();
-      })
-      .catch((erro) => alert(erro.message));
+    postBet(userBet, "corner");
+    setCorners();
   }
 
   return (

@@ -7,7 +7,7 @@ import { ThreeDots } from "react-loader-spinner";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setToken, setName } = useContext(UserContext);
+  const { setToken, setName,setAvailableAmount } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
   function clearLoginInputs() {
@@ -44,6 +44,7 @@ export default function Login() {
         }));
         setName(res.data.name);
         setToken(res.data.token);
+        setAvailableAmount(res.data.availableMoney)
         navigate(-1);
       })
       .catch((error) => {

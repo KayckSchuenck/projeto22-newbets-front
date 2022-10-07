@@ -1,9 +1,7 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { BetFlex, Form } from "../Games";
-import UserContext from "../../Context/userContext";
-import CheckToken from "../../Utils/checkToken";
+import postBet from "../../Utils/postBet";
 
 export default function HomeAwayDraw({
   odd,
@@ -17,8 +15,6 @@ export default function HomeAwayDraw({
   function handleBetWinner(e) {
     e.preventDefault();
 
-    const config = CheckToken();
-
     const userBet = {
       amount,
       fixtureId,
@@ -26,17 +22,8 @@ export default function HomeAwayDraw({
       value,
     };
 
-    axios
-      .post(
-        `${process.env.REACT_APP_API_BASE_URL}/bets/options`,
-        userBet,
-        config
-      )
-      .then(() => {
-        alert("Aposta efetuada com sucesso");
-        setWinner();
-      })
-      .catch((erro) => alert(erro.message));
+    postBet(userBet, "options");
+    setWinner();
   }
   return (
     <>

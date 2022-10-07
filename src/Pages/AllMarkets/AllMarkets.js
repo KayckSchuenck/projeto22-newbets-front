@@ -29,10 +29,14 @@ export default function AllMarkets() {
         config
       );
       const markets = result.response[0].bookmakers[0].bets;
-      const filterMarkets = markets.filter(
-        (e) => e.id === 1 || e.id === 5 || e.id === 45
+      const chosenMarkets = markets.filter(
+        (market) =>
+          market.id === 1 ||
+          market.id === 5 ||
+          market.id === 10 ||
+          market.id === 45
       );
-      setOddsData(filterMarkets);
+      setOddsData(chosenMarkets);
     } catch (erro) {
       console.log(erro);
     }
