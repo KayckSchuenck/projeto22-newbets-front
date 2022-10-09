@@ -40,7 +40,7 @@ export default function Login() {
         localStorage.setItem("isLogged",JSON.stringify({
             name:res.data.name,
             token:res.data.token,
-            id:res.data.id
+            availableAmount:res.data.availableMoney
         }));
         setName(res.data.name);
         setToken(res.data.token);

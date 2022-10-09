@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import Corners from "../../components/BetUtils/ChosenMarkets/Corners";
 import Goals from "../../components/BetUtils/ChosenMarkets/Goals";
 import HomeAwayDraw from "../../components/BetUtils/ChosenMarkets/HomeAwayDraw";
 import ExactScore from "../../components/BetUtils/ChosenMarkets/ExactScore";
@@ -30,11 +29,7 @@ export default function AllMarkets() {
       );
       const markets = result.response[0].bookmakers[0].bets;
       const chosenMarkets = markets.filter(
-        (market) =>
-          market.id === 1 ||
-          market.id === 5 ||
-          market.id === 10 ||
-          market.id === 45
+        (market) => market.id === 1 || market.id === 5 || market.id === 10
       );
       setOddsData(chosenMarkets);
     } catch (erro) {
@@ -54,63 +49,51 @@ export default function AllMarkets() {
           <span>{away}</span>
         </Flex>
         {oddsData ? (
-          oddsData.map((e) => {
-            if (e.id === 1)
+          oddsData.map((elem) => {
+            if (elem.id === 1)
               <Market>
-                <span>{e.name}</span>
+                <span>{elem.name}</span>
                 <Flex>
-                  {e.values.map((e) => (
+                  {elem.values.map((line, index) => (
                     <HomeAwayDraw
-                      odd={e.odd}
-                      value={e.value}
+                      odd={line.odd}
+                      value={line.value}
                       setWinner={setWinnerSelected}
                       winner={winnerSelected}
                       fixtureId={fixtureId}
+                      key={index}
                     />
                   ))}
                 </Flex>
               </Market>;
-            if (e.id === 5)
+            if (elem.id === 5)
               <Market>
-                <span>{e.name}</span>
+                <span>{elem.name}</span>
                 <Flex>
-                  {e.values.map((e) => (
+                  {elem.values.map((line, index) => (
                     <Goals
-                      odd={e.odd}
-                      value={e.value}
+                      odd={line.odd}
+                      value={line.value}
                       setGoals={setGoalsSelected}
                       goals={goalsSelected}
                       fixtureId={fixtureId}
+                      key={index}
                     />
                   ))}
                 </Flex>
               </Market>;
-            if (e.id === 45)
+            if (elem.id === 10)
               <Market>
-                <span>{e.name}</span>
+                <span>{elem.name}</span>
                 <Flex>
-                  {e.values.map((e) => (
-                    <Corners
-                      odd={e.odd}
-                      value={e.value}
-                      setCorners={setCornerSelected}
-                      corners={cornerSelected}
-                      fixtureId={fixtureId}
-                    />
-                  ))}
-                </Flex>
-              </Market>;
-            if (e.id === 10)
-              <Market>
-                <span>{e.name}</span>
-                <Flex>
-                  {e.values.map((e) => (
+                  {elem.values.map((line, index) => (
                     <ExactScore
-                      odd={e.odd}
-                      value={e.value}
+                      odd={line.odd}
+                      value={line.value}
                       setScore={setScoreSelected}
                       score={scoreSelected}
                       fixtureId={fixtureId}
+                      key={index}
                     />
                   ))}
                 </Flex>

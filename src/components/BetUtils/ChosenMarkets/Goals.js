@@ -1,12 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { BetFlex, Form } from "../Games";
-import CheckToken from "../../Utils/checkToken";
-import postBet from "../../Utils/postBet";
+import PostBet from "../../Utils/postBet";
 
 export default function Goals({ odd, value, setGoals, goals, fixtureId }) {
   const [amount, setAmount] = useState();
+
   const type = value.includes("Under") ? "under" : "over";
   const numberValue = Number(value.replace(/'Over '|'Under '/g, ""));
 
@@ -21,7 +20,7 @@ export default function Goals({ odd, value, setGoals, goals, fixtureId }) {
       type,
     };
 
-    postBet(userBet, "goal");
+    PostBet(userBet, "goal");
     setGoals();
   }
 

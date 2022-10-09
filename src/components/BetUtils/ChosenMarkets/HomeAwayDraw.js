@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { BetFlex, Form } from "../Games";
-import postBet from "../../Utils/postBet";
+import PostBet from "../../Utils/postBet";
 
 export default function HomeAwayDraw({
   odd,
@@ -22,7 +22,7 @@ export default function HomeAwayDraw({
       value,
     };
 
-    postBet(userBet, "options");
+    PostBet(userBet, "options");
     setWinner();
   }
   return (

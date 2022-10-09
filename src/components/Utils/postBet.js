@@ -1,16 +1,33 @@
 import axios from "axios";
 import { useContext } from "react";
 import UserContext from "../Context/userContext";
-import CheckToken from "./checkToken";
+import { useNavigate } from "react-router-dom";
 
-export default function postBet(userBet, rota) {
-  const { setAvailableAmount } = useContext(UserContext);
-  const config = CheckToken();
-  axios
-    .post(`${process.env.REACT_APP_API_BASE_URL}/bets/${rota}`, userBet, config)
-    .then((res) => {
-      alert("Aposta efetuada com sucesso");
-      setAvailableAmount(res.data);
-    })
-    .catch((erro) => console.log(erro));
-}
+const usePostBet = (userBet, route) => {
+  const { token, setAvailableAmount } = useContext(UserContext);
+  const navigate = useNavigate();
+  if (!token) {
+    alert("Por favor efetue seu login");
+    navigate("/login");
+  } else {
+    const config = {
+      Authorization: `Bearer ${token}`,
+    };
+    axios
+      .post(
+        `${process.env.REACT_APP_API_BASE_URL}/bets/${route}`,
+        userBet,
+        config
+      )
+      .then((res) => {
+        alert("Aposta efetuada com sucesso");
+        setAvailableAmount(res.data);
+        const available = JSON.parse(localStorage.getItem("isLogged"));
+        available.availableAmount = res.data;
+        localStorage.setItem("isLogged", JSON.stringify(available));
+      })
+      .catch((erro) => console.log(erro));
+  }
+};
+
+export default usePostBet;

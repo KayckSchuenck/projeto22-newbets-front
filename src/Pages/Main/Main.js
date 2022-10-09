@@ -1,9 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import Country from "../../components/BetUtils/Country";
+import UserContext from "../../components/Context/userContext";
 
 export default function Main() {
+  const login = localStorage.getItem("isLogged");
+  const parseLogin = JSON.parse(login);
+  const { setName, setToken, setAvailableAmount } = useContext(UserContext);
+  if (login) {
+    setName(parseLogin.name);
+    setToken(parseLogin.token);
+    setAvailableAmount(parseLogin.availableAmount);
+  }
+
   const [leagueData, setLeagueData] = useState();
 
   async function fetchData() {
