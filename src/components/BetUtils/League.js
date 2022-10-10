@@ -13,10 +13,16 @@ export default function League({ name, id }) {
 }
 
 const Box = styled.button`
-  background-color: lightblue;
   border-radius: 5px;
-
-  span {
-    background-color: red;
+  margin-left: 15px;
+  margin-bottom: 5px;
+  width: 20vw;
+  text-align: center;
+  a {
+    color: black;
+    padding-left: 15px;
+  }
+  @media (max-width: 550px) {
+    width: 25vw;
   }
 `;

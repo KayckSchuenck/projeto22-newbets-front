@@ -39,7 +39,7 @@ export default function Header() {
       </Flex>
       {selected ? (
         <UserOptions>
-          <button>
+          <button onClick={() => setSelected(false)}>
             <Link to="/history">Histórico de apostas</Link>
           </button>
           <NotDone>Adicionar fundos</NotDone>
