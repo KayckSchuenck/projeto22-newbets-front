@@ -8,6 +8,7 @@ import Main from "./Pages/Main/Main";
 import AllLeagueGames from "./Pages/AllLeagueGames/AllLeagueGames";
 import AllMarkets from "./Pages/AllMarkets/AllMarkets";
 import Header from "./components/Header/Header";
+import PersistRoute from "./components/Routes/PersistRoute";
 
 function App() {
   const [token, setToken] = useState();
@@ -30,9 +31,14 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/" element={<Main />} />
-          <Route path="/leagues/:id" element={<AllLeagueGames />} />
-          <Route path="/markets/:fixtureId" element={<AllMarkets />} />
+          <Route
+            element={<PersistRoute auth={localStorage.getItem("isLogged")} />}
+          >
+            <Route path="/" element={<Main />} />
+            <Route path="/leagues/:id" element={<AllLeagueGames />} />
+            <Route path="/markets/:fixtureId" element={<AllMarkets />} />
+            <Route path="/history" element={<History />} />
+          </Route>
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

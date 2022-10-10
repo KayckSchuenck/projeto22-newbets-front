@@ -1,10 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../Context/userContext";
 import { IoPersonCircleSharp } from "react-icons/io5";
+
 export default function Header() {
   const { setAvailableAmount, setName, setToken } = useContext(UserContext);
+  const [selected, setSelected] = useState(false);
+
   function logout() {
     localStorage.clear();
     setName();
@@ -18,10 +21,10 @@ export default function Header() {
         <p>Olá {name}</p>
         <p>Saldo Disponível:R$ {availableAmount.toFixed(2)}</p>
       </div>
-
-      <Logout onClick={logout}>
+      <Link to="/history">Histórico</Link>
+      <Logout>
         <IoPersonCircleSharp />
-        Logout
+        <span onClick={logout}>Logout</span>
       </Logout>
     </Flex>
   ) : (

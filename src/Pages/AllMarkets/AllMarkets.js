@@ -4,14 +4,13 @@ import axios from "axios";
 import styled from "styled-components";
 import Goals from "../../components/BetUtils/ChosenMarkets/Goals";
 import HomeAwayDraw from "../../components/BetUtils/ChosenMarkets/HomeAwayDraw";
-import ExactScore from "../../components/BetUtils/ChosenMarkets/ExactScore";
+import ExactScores from "../../components/BetUtils/ChosenMarkets/ExactScores";
 
 export default function AllMarkets() {
   const location = useLocation();
   const { fixtureId } = useParams();
   const { home, away } = location.state;
   const [oddsData, setOddsData] = useState();
-  const [cornerSelected, setCornerSelected] = useState(false);
   const [goalsSelected, setGoalsSelected] = useState(false);
   const [scoreSelected, setScoreSelected] = useState(false);
   const [winnerSelected, setWinnerSelected] = useState(false);
@@ -50,54 +49,65 @@ export default function AllMarkets() {
         </Flex>
         {oddsData ? (
           oddsData.map((elem) => {
-            if (elem.id === 1)
-              <Market>
-                <span>{elem.name}</span>
-                <Flex>
-                  {elem.values.map((line, index) => (
-                    <HomeAwayDraw
-                      odd={line.odd}
-                      value={line.value}
-                      setWinner={setWinnerSelected}
-                      winner={winnerSelected}
-                      fixtureId={fixtureId}
-                      key={index}
-                    />
-                  ))}
-                </Flex>
-              </Market>;
-            if (elem.id === 5)
-              <Market>
-                <span>{elem.name}</span>
-                <Flex>
-                  {elem.values.map((line, index) => (
-                    <Goals
-                      odd={line.odd}
-                      value={line.value}
-                      setGoals={setGoalsSelected}
-                      goals={goalsSelected}
-                      fixtureId={fixtureId}
-                      key={index}
-                    />
-                  ))}
-                </Flex>
-              </Market>;
-            if (elem.id === 10)
-              <Market>
-                <span>{elem.name}</span>
-                <Flex>
-                  {elem.values.map((line, index) => (
-                    <ExactScore
-                      odd={line.odd}
-                      value={line.value}
-                      setScore={setScoreSelected}
-                      score={scoreSelected}
-                      fixtureId={fixtureId}
-                      key={index}
-                    />
-                  ))}
-                </Flex>
-              </Market>;
+            if (elem.id === 1) {
+              return (
+                <Market>
+                  <span>{elem.name}</span>
+                  <Flex>
+                    {elem.values.map((line, index) => (
+                      <HomeAwayDraw
+                        odd={line.odd}
+                        value={line.value}
+                        setWinner={setWinnerSelected}
+                        winner={winnerSelected}
+                        fixtureId={fixtureId}
+                        key={index}
+                      />
+                    ))}
+                  </Flex>
+                </Market>
+              );
+            }
+
+            if (elem.id === 5) {
+              return (
+                <Market>
+                  <span>{elem.name}</span>
+                  <Flex>
+                    {elem.values.map((line, index) => (
+                      <Goals
+                        odd={line.odd}
+                        value={line.value}
+                        setGoals={setGoalsSelected}
+                        goals={goalsSelected}
+                        fixtureId={fixtureId}
+                        key={index}
+                      />
+                    ))}
+                  </Flex>
+                </Market>
+              );
+            }
+
+            if (elem.id === 10) {
+              return (
+                <Market>
+                  <span>{elem.name}</span>
+                  <Flex>
+                    {elem.values.map((line, index) => (
+                      <ExactScores
+                        odd={line.odd}
+                        value={line.value}
+                        setScore={setScoreSelected}
+                        score={scoreSelected}
+                        fixtureId={fixtureId}
+                        key={index}
+                      />
+                    ))}
+                  </Flex>
+                </Market>
+              );
+            }
           })
         ) : (
           <>loading</>

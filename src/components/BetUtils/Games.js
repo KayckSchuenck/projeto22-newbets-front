@@ -20,7 +20,6 @@ export default function Games({
   const [selectedHome, setSelectedHome] = useState();
   const [selectedAway, setSelectedAway] = useState();
   const { token, setAvailableAmount } = useContext(UserContext);
-  console.log(token);
   const navigate = useNavigate();
   const link = `/markets/${fixtureId}`;
 
@@ -39,7 +38,9 @@ export default function Games({
       navigate("/login");
     } else {
       const config = {
-        Authorization: `Bearer ${token}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       };
       axios
         .post(

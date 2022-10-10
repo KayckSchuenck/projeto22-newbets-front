@@ -6,12 +6,15 @@ import { useNavigate } from "react-router-dom";
 const usePostBet = (userBet, route) => {
   const { token, setAvailableAmount } = useContext(UserContext);
   const navigate = useNavigate();
+
   if (!token) {
     alert("Por favor efetue seu login");
     navigate("/login");
   } else {
     const config = {
-      Authorization: `Bearer ${token}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     };
     axios
       .post(
@@ -22,9 +25,6 @@ const usePostBet = (userBet, route) => {
       .then((res) => {
         alert("Aposta efetuada com sucesso");
         setAvailableAmount(res.data);
-        const available = JSON.parse(localStorage.getItem("isLogged"));
-        available.availableAmount = res.data;
-        localStorage.setItem("isLogged", JSON.stringify(available));
       })
       .catch((erro) => console.log(erro));
   }
