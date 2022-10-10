@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import UserContext from "../../Context/userContext";
 import { BetFlex, Form } from "../Games";
-import PostBet from "../../Utils/postBet";
 
 export default function HomeAwayDraw({
   odd,
@@ -10,6 +10,7 @@ export default function HomeAwayDraw({
   winner,
   fixtureId,
 }) {
+  const { postBet } = useContext(UserContext);
   const [amount, setAmount] = useState();
 
   function handleBetWinner(e) {
@@ -22,7 +23,7 @@ export default function HomeAwayDraw({
       value,
     };
 
-    PostBet(userBet, "options");
+    postBet(userBet, "options");
     setWinner();
   }
   return (

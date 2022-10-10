@@ -1,24 +1,47 @@
 import styled from "styled-components";
 
-export default function Registers({ won, amount, odd, id, finished }) {
+export default function Registers({
+  won,
+  amount,
+  odd,
+  finished,
+  type,
+  homeScore,
+  value,
+  awayScore,
+}) {
   const potencialReturn = (amount * odd - amount).toFixed(2);
   return (
     <Block>
-      <span>
-        Aposta número {id}
-        Valor apostado:{amount}
-        {finished ? (
-          <p $won={won}>Retorno:{potencialReturn}</p>
-        ) : (
-          <p>Retorno potencial:{potencialReturn}</p>
-        )}
-      </span>
+      {type ? (
+        <p>
+          {type} {value} gols
+        </p>
+      ) : homeScore !== undefined ? (
+        <p>
+          Placar Final {homeScore}x{awayScore}
+        </p>
+      ) : (
+        <p>Vencedor:{value}</p>
+      )}
+      Valor apostado: R${amount.toFixed(2)}
+      {finished ? (
+        <>
+          Retorno: <span $win={won}>R${potencialReturn}</span>
+        </>
+      ) : (
+        <p>Retorno potencial: R${potencialReturn}</p>
+      )}
     </Block>
   );
 }
 
 const Block = styled.div`
-  p {
-    color: ${(props) => (props.$won ? "green" : "red")};
+  span {
+    color: ${(props) => (props.$win ? "green" : "red")};
   }
+  margin-bottom: 5px;
+  padding: 10px;
+  width: 40vw;
+  color: #e4e4e4;
 `;

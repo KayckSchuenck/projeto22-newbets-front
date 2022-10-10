@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 import { BetFlex, Form } from "../Games";
-import PostBet from "../../Utils/postBet";
-
+import UserContext from "../../Context/userContext";
 export default function Goals({ odd, value, setGoals, goals, fixtureId }) {
+  const { postBet } = useContext(UserContext);
   const [amount, setAmount] = useState();
 
   const type = value.includes("Under") ? "under" : "over";
@@ -20,7 +20,7 @@ export default function Goals({ odd, value, setGoals, goals, fixtureId }) {
       type,
     };
 
-    PostBet(userBet, "goal");
+    postBet(userBet, "goal");
     setGoals();
   }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import Country from "../../components/BetUtils/Country";
+import { TailSpin } from "react-loader-spinner";
 
 export default function Main() {
   const [leagueData, setLeagueData] = useState();
@@ -46,7 +47,18 @@ export default function Main() {
   }, []);
 
   return !leagueData ? (
-    <>loading</>
+    <Loading>
+      <TailSpin
+        height="150"
+        width="150"
+        color="#4fa94d"
+        ariaLabel="tail-spin-loading"
+        radius="1"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
+    </Loading>
   ) : (
     <Block>
       {leagueData.map((country, index) => (
@@ -64,4 +76,12 @@ export default function Main() {
 const Block = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const Loading = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
 `;

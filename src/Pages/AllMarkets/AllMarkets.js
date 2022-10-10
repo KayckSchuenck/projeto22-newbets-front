@@ -5,6 +5,8 @@ import styled from "styled-components";
 import Goals from "../../components/BetUtils/ChosenMarkets/Goals";
 import HomeAwayDraw from "../../components/BetUtils/ChosenMarkets/HomeAwayDraw";
 import ExactScores from "../../components/BetUtils/ChosenMarkets/ExactScores";
+import { TailSpin } from "react-loader-spinner";
+import { Loading } from "../Main/Main";
 
 export default function AllMarkets() {
   const location = useLocation();
@@ -110,7 +112,18 @@ export default function AllMarkets() {
             }
           })
         ) : (
-          <>loading</>
+          <Loading>
+            <TailSpin
+              height="150"
+              width="150"
+              color="#4fa94d"
+              ariaLabel="tail-spin-loading"
+              radius="1"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          </Loading>
         )}
       </Container>
     </>

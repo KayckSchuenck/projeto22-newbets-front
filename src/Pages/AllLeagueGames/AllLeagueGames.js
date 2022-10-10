@@ -4,6 +4,8 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import axios from "axios";
 import Dates from "../../components/BetUtils/Dates";
+import { TailSpin } from "react-loader-spinner";
+import { Loading } from "../Main/Main";
 
 export default function AllLeagueGames() {
   const [gamesData, setGamesData] = useState();
@@ -49,7 +51,18 @@ export default function AllLeagueGames() {
   }, []);
 
   return !gamesData ? (
-    <>loading</>
+    <Loading>
+      <TailSpin
+        height="150"
+        width="150"
+        color="#4fa94d"
+        ariaLabel="tail-spin-loading"
+        radius="1"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
+    </Loading>
   ) : (
     <>
       <Block>

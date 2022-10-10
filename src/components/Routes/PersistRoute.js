@@ -16,7 +16,7 @@ export default function PersistRoute({ auth }) {
     };
     axios
       .get(`${process.env.REACT_APP_API_BASE_URL}/bets`, config)
-      .then((res) => setAvailableAmount(res.data))
+      .then((res) => setAvailableAmount(res.data.amount))
       .catch((error) => {
         alert(error.response.data);
         console.log(error);

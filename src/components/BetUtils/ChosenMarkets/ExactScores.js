@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 import { BetFlex, Form } from "../Games";
-import postBet from "../../Utils/postBet";
+import UserContext from "../../Context/userContext";
 
 export default function ExactScore({ odd, value, setScore, score, fixtureId }) {
+  const { postBet } = useContext(UserContext);
   const [amount, setAmount] = useState();
   const values = value.split(" ");
   const scoreHome = values[0];

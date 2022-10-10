@@ -1,11 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import usePostBet from "../Utils/postBet";
-import axios from "axios";
 import { useContext } from "react";
 import UserContext from "../Context/userContext";
-import { useNavigate } from "react-router-dom";
 
 export default function Games({
   home,
@@ -19,8 +16,7 @@ export default function Games({
   const [amount, setAmount] = useState(0);
   const [selectedHome, setSelectedHome] = useState();
   const [selectedAway, setSelectedAway] = useState();
-  const { token, setAvailableAmount } = useContext(UserContext);
-  const navigate = useNavigate();
+  const { postBet } = useContext(UserContext);
   const link = `/markets/${fixtureId}`;
 
   function handleBetHome(e) {
@@ -33,30 +29,7 @@ export default function Games({
       value: "home",
     };
 
-    if (!token) {
-      alert("Por favor efetue seu login");
-      navigate("/login");
-    } else {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      axios
-        .post(
-          `${process.env.REACT_APP_API_BASE_URL}/bets/options`,
-          userBet,
-          config
-        )
-        .then((res) => {
-          alert("Aposta efetuada com sucesso");
-          setAvailableAmount(res.data);
-          const available = JSON.parse(localStorage.getItem("isLogged"));
-          available.availableAmount = res.data;
-          localStorage.setItem("isLogged", JSON.stringify(available));
-        })
-        .catch((erro) => console.log(erro));
-    }
+    postBet(userBet, "options");
     setSelectedHome();
   }
 
@@ -69,29 +42,8 @@ export default function Games({
       odd: awayOdd,
       value: "away",
     };
-    const config = {
-      Authorization: `Bearer ${token}`,
-    };
 
-    if (!token) {
-      alert("Por favor efetue seu login");
-      navigate("/login");
-    } else {
-      axios
-        .post(
-          `${process.env.REACT_APP_API_BASE_URL}/bets/options`,
-          userBet,
-          config
-        )
-        .then((res) => {
-          alert("Aposta efetuada com sucesso");
-          setAvailableAmount(res.data);
-          const available = JSON.parse(localStorage.getItem("isLogged"));
-          available.availableAmount = res.data;
-          localStorage.setItem("isLogged", JSON.stringify(available));
-        })
-        .catch((erro) => console.log(erro));
-    }
+    postBet(userBet, "options");
     setSelectedAway();
   }
 
