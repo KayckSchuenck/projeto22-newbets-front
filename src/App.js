@@ -35,7 +35,7 @@ function App() {
         )
         .then((res) => {
           alert("Aposta efetuada com sucesso");
-          setAvailableAmount(res.data);
+          setAvailableAmount(res.data.availableMoney);
         })
         .catch((erro) => console.log(erro));
     }

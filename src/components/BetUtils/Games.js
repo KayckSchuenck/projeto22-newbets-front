@@ -59,14 +59,14 @@ export default function Games({
           >
             {homeOdd}
           </span>
-          {home} <img src={homeLogo} alt={"logo"} />
+          <p>{home}</p> <img src={homeLogo} alt={"logo"} />
         </Flex>
 
-        <Flex>
+        <FlexCenter>
           <Link to={link} state={{ home, away }}>
             Outros mercados
           </Link>
-        </Flex>
+        </FlexCenter>
 
         <Flex>
           <span
@@ -77,14 +77,15 @@ export default function Games({
           >
             {awayOdd}
           </span>
-          {away} <img src={awayLogo} alt={"logo"} />
+          <p>{away} </p>
+          <img src={awayLogo} alt={"logo"} />
         </Flex>
       </Box>
       {selectedHome ? (
         <Form onSubmit={handleBetHome}>
           {home} - {homeOdd}
-          Resultado final
           <BetFlex>
+            R$
             <input
               type="number"
               placeholder="R$ 0.00"
@@ -92,7 +93,7 @@ export default function Games({
               required
               onChange={(e) => setAmount(e.target.value)}
             />
-            <span>Retorno esperado={(amount * homeOdd).toFixed(2)}</span>
+            <span>Retorno esperado: {(amount * homeOdd).toFixed(2)}</span>
           </BetFlex>
           <button type="submit">Faça já sua aposta</button>
         </Form>
@@ -101,8 +102,8 @@ export default function Games({
       )}
       {selectedAway ? (
         <Form onSubmit={handleBetAway}>
-          {away} - {awayOdd}
           <BetFlex>
+            {away} - {awayOdd}
             <input
               type="number"
               placeholder="0.00"
@@ -110,8 +111,8 @@ export default function Games({
               required
               onChange={(e) => setAmount(e.target.value)}
             />
-            <span>Retorno esperado={(amount * awayOdd).toFixed(2)}</span>
           </BetFlex>
+          <span>Retorno esperado: R${(amount * awayOdd).toFixed(2)}</span>
           <button type="submit">Faça já sua aposta</button>
         </Form>
       ) : (
@@ -121,38 +122,51 @@ export default function Games({
   );
 }
 
-const Box = styled.button`
-  background-color: lightblue;
+const Box = styled.div`
+  background-color: #126e51;
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
   padding: 0 20px;
+  margin-bottom: 10px;
+  height: 40px;
+  font-size: 20px;
   img {
     margin-left: 5px;
-    width: 10px;
-    height: 10px;
+    width: 4vw;
+    height: 5vh;
   }
   span {
     color: yellow;
-    margin-right: 10px;
+    margin-right: 5px;
     cursor: pointer;
   }
   a {
-    color: red;
+    color: black;
   }
-  cursor: default;
+  @media (max-width: 708px) {
+    padding: 0 10px;
+    font-size: 15px;
+  }
 `;
 
 const Flex = styled.div`
   display: flex;
   align-items: center;
-  width: 30vw;
+  justify-content: space-between;
+  width: 32vw;
+  p {
+    color: white;
+  }
+  span {
+    line-break: loose;
+  }
 `;
 
 export const BetFlex = styled.div`
   display: flex;
   align-items: center;
-
+  margin-top: 5px;
   span {
     color: black;
   }
@@ -163,20 +177,45 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: #e4e4e4;
+  margin-bottom: 10px;
+  border-radius: 5px;
   input {
     background-color: rgba(0, 0, 0, 0);
     border: solid 1px #367a65;
     padding: 3px;
     border-radius: 5px;
-    width: 10vw;
-    margin: 0 5px 5px 0;
+    width: 15vw;
+    text-align: center;
+    margin-left: 10px;
+    color: #5a8700;
+    font-weight: 700;
+    font-size: 18px;
   }
   button {
+    margin-top: 5px;
     margin-bottom: 5px;
     border-radius: 5px;
     padding: 5px;
     background-color: gray;
     color: white;
+    width: 175px;
+  }
+  span {
+    color: #64a964;
+    font-weight: 700;
+  }
+`;
+
+const FlexCenter = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  width: 20vw;
+  border-radius: 2px;
+  background-color: #e3dbdb;
+  a {
+    font-style: italic;
   }
 `;

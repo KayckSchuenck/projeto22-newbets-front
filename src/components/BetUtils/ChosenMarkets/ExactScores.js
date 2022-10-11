@@ -26,10 +26,10 @@ export default function ExactScore({ odd, value, setScore, score, fixtureId }) {
   }
   return (
     <>
-      <Block>
+      <Button>
         <p>{value}</p>
         <p onClick={() => setScore(!score)}>{odd}</p>
-      </Block>
+      </Button>
       {score ? (
         <Form onSubmit={handleBetScores}>
           {value} - {odd}
@@ -52,4 +52,7 @@ export default function ExactScore({ odd, value, setScore, score, fixtureId }) {
   );
 }
 
-const Block = styled.div``;
+const Button = styled.button`
+  width: 20vw;
+  background-color: #e4e4e4;
+`;

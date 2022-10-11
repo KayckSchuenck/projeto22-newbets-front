@@ -26,10 +26,10 @@ export default function Goals({ odd, value, setGoals, goals, fixtureId }) {
 
   return (
     <>
-      <Block>
+      <Button>
         <p>{value}</p>
         <p onClick={() => setGoals(!goals)}>{odd}</p>
-      </Block>
+      </Button>
       {goals ? (
         <Form onSubmit={handleBetGoals}>
           {value} - {odd}
@@ -52,4 +52,7 @@ export default function Goals({ odd, value, setGoals, goals, fixtureId }) {
   );
 }
 
-const Block = styled.div``;
+const Button = styled.button`
+  width: 20vw;
+  background-color: #e4e4e4;
+`;

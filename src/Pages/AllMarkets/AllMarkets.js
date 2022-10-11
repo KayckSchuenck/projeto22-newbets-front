@@ -33,6 +33,7 @@ export default function AllMarkets() {
         (market) => market.id === 1 || market.id === 5 || market.id === 10
       );
       setOddsData(chosenMarkets);
+      console.log(result.response);
     } catch (erro) {
       console.log(erro);
     }
@@ -76,16 +77,18 @@ export default function AllMarkets() {
                 <Market>
                   <span>{elem.name}</span>
                   <Flex>
-                    {elem.values.map((line, index) => (
-                      <Goals
-                        odd={line.odd}
-                        value={line.value}
-                        setGoals={setGoalsSelected}
-                        goals={goalsSelected}
-                        fixtureId={fixtureId}
-                        key={index}
-                      />
-                    ))}
+                    <Block>
+                      {elem.values.map((line, index) => (
+                        <Goals
+                          odd={line.odd}
+                          value={line.value}
+                          setGoals={setGoalsSelected}
+                          goals={goalsSelected}
+                          fixtureId={fixtureId}
+                          key={index}
+                        />
+                      ))}
+                    </Block>
                   </Flex>
                 </Market>
               );
@@ -96,16 +99,18 @@ export default function AllMarkets() {
                 <Market>
                   <span>{elem.name}</span>
                   <Flex>
-                    {elem.values.map((line, index) => (
-                      <ExactScores
-                        odd={line.odd}
-                        value={line.value}
-                        setScore={setScoreSelected}
-                        score={scoreSelected}
-                        fixtureId={fixtureId}
-                        key={index}
-                      />
-                    ))}
+                    <Block>
+                      {elem.values.map((line, index) => (
+                        <ExactScores
+                          odd={line.odd}
+                          value={line.value}
+                          setScore={setScoreSelected}
+                          score={scoreSelected}
+                          fixtureId={fixtureId}
+                          key={index}
+                        />
+                      ))}
+                    </Block>
                   </Flex>
                 </Market>
               );
@@ -152,5 +157,12 @@ const Market = styled.div`
   align-items: center;
   span {
     margin: 30px 0;
+  }
+`;
+const Block = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  p {
+    color: black;
   }
 `;
