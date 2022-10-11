@@ -4,9 +4,18 @@ import axios from "axios";
 import { Container, Slogan } from "./Login";
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
+
 export default function SignUp() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
+  function cpfMask(value) {
+    value = value.replace(/\D/g, "");
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    return value;
+  }
 
   function clearSignUpInputs() {
     return {
@@ -21,6 +30,12 @@ export default function SignUp() {
   const [postForm, setPostForm] = useState(clearSignUpInputs);
 
   function handleForm(e) {
+    if (e.target.name === "cpf") {
+      setPostForm({
+        ...postForm,
+        [e.target.name]: cpfMask(e),
+      });
+    }
     setPostForm({
       ...postForm,
       [e.target.name]: e.target.value,
@@ -38,6 +53,7 @@ export default function SignUp() {
     );
     promise
       .then(() => {
+        alert("Cadastro efetuado com sucesso");
         navigate("/login");
       })
       .catch((erro) => {
@@ -91,6 +107,7 @@ export default function SignUp() {
           type="text"
           placeholder="CPF"
           name="cpf"
+          maxLength={14}
           value={postForm.cpf}
           onChange={handleForm}
           required

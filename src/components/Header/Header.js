@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../Context/userContext";
+import { HiOutlineLogout } from "react-icons/hi";
 import {
   IoPersonCircleSharp,
   IoArrowUpCircleSharp,
@@ -9,7 +10,9 @@ import {
 } from "react-icons/io5";
 
 export default function Header() {
-  const { setAvailableAmount, setName, setToken } = useContext(UserContext);
+  const { setAvailableAmount, setName, setToken, name, availableAmount } =
+    useContext(UserContext);
+
   const [selected, setSelected] = useState(false);
 
   function logout() {
@@ -19,8 +22,7 @@ export default function Header() {
     setAvailableAmount();
   }
 
-  const { name, availableAmount } = useContext(UserContext);
-  return name && availableAmount ? (
+  return name && availableAmount !== undefined ? (
     <>
       <Flex>
         <Link to="/">NEW BETS</Link>
@@ -44,7 +46,10 @@ export default function Header() {
           </button>
           <NotDone>Adicionar fundos</NotDone>
           <NotDone>Realizar um saque</NotDone>
-          <button onClick={logout}>Logout</button>
+          <Button onClick={logout}>
+            Logout
+            <HiOutlineLogout style={{ width: 24, height: 24 }} />
+          </Button>
         </UserOptions>
       ) : (
         <></>
@@ -114,7 +119,7 @@ const UserOptions = styled.div`
     font-weight: 700;
     height: 40px;
     margin-bottom: 10px;
-    padding: 5px;
+    padding: 5px 10px;
     background-color: #e4e4e4;
   }
   @media (max-width: 470px) {
@@ -129,4 +134,11 @@ const UserOptions = styled.div`
 const NotDone = styled.button`
   text-decoration: line-through;
   font-style: italic;
+`;
+
+const Button = styled.button`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
 `;
