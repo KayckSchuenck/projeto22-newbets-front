@@ -5,6 +5,7 @@ import UserContext from "../../Context/userContext";
 export default function Goals({ odd, value, setGoals, goals, fixtureId }) {
   const { postBet } = useContext(UserContext);
   const [amount, setAmount] = useState();
+  const [selected, setSelected] = useState(false);
 
   const type = value.includes("Under") ? "under" : "over";
   const numberValue = Number(value.replace(/'Over '|'Under '/g, ""));
@@ -21,16 +22,16 @@ export default function Goals({ odd, value, setGoals, goals, fixtureId }) {
     };
 
     postBet(userBet, "goal");
-    setGoals();
+    setSelected();
   }
 
   return (
     <>
       <Button>
         <p>{value}</p>
-        <p onClick={() => setGoals(!goals)}>{odd}</p>
+        <p onClick={() => setSelected(!selected)}>{odd}</p>
       </Button>
-      {goals ? (
+      {selected ? (
         <Form onSubmit={handleBetGoals}>
           {value} - {odd}
           <BetFlex>

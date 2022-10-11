@@ -63,7 +63,7 @@ export default function Games({
         </Flex>
 
         <FlexCenter>
-          <Link to={link} state={{ home, away }}>
+          <Link to={link} state={{ home, away, homeLogo, awayLogo }}>
             Outros mercados
           </Link>
         </FlexCenter>

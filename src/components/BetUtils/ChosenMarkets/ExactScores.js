@@ -6,7 +6,9 @@ import UserContext from "../../Context/userContext";
 export default function ExactScore({ odd, value, setScore, score, fixtureId }) {
   const { postBet } = useContext(UserContext);
   const [amount, setAmount] = useState();
-  const values = value.split(" ");
+  const [selected, setSelected] = useState(false);
+
+  const values = value.split(":");
   const scoreHome = values[0];
   const scoreAway = values[1];
 
@@ -22,15 +24,15 @@ export default function ExactScore({ odd, value, setScore, score, fixtureId }) {
     };
 
     postBet(userBet, "scores");
-    setScore();
+    setSelected();
   }
   return (
     <>
       <Button>
         <p>{value}</p>
-        <p onClick={() => setScore(!score)}>{odd}</p>
+        <p onClick={() => setSelected(!selected)}>{odd}</p>
       </Button>
-      {score ? (
+      {selected ? (
         <Form onSubmit={handleBetScores}>
           {value} - {odd}
           <BetFlex>

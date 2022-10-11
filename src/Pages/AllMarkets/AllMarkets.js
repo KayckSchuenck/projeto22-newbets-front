@@ -11,11 +11,8 @@ import { Loading } from "../Main/Main";
 export default function AllMarkets() {
   const location = useLocation();
   const { fixtureId } = useParams();
-  const { home, away } = location.state;
+  const { home, away, homeLogo, awayLogo } = location.state;
   const [oddsData, setOddsData] = useState();
-  const [goalsSelected, setGoalsSelected] = useState(false);
-  const [scoreSelected, setScoreSelected] = useState(false);
-  const [winnerSelected, setWinnerSelected] = useState(false);
 
   async function fetchData() {
     const config = {
@@ -33,7 +30,6 @@ export default function AllMarkets() {
         (market) => market.id === 1 || market.id === 5 || market.id === 10
       );
       setOddsData(chosenMarkets);
-      console.log(result.response);
     } catch (erro) {
       console.log(erro);
     }
@@ -46,28 +42,27 @@ export default function AllMarkets() {
   return (
     <>
       <Container>
-        <Flex>
-          <span>{home}</span>
-          <span>{away}</span>
-        </Flex>
+        <TeamInfo>
+          <img src={homeLogo} />
+          <span>{home}</span>X<span>{away}</span>
+          <img src={awayLogo} />
+        </TeamInfo>
         {oddsData ? (
           oddsData.map((elem) => {
             if (elem.id === 1) {
               return (
                 <Market>
                   <span>{elem.name}</span>
-                  <Flex>
+                  <Winner>
                     {elem.values.map((line, index) => (
                       <HomeAwayDraw
                         odd={line.odd}
                         value={line.value}
-                        setWinner={setWinnerSelected}
-                        winner={winnerSelected}
                         fixtureId={fixtureId}
                         key={index}
                       />
                     ))}
-                  </Flex>
+                  </Winner>
                 </Market>
               );
             }
@@ -82,8 +77,6 @@ export default function AllMarkets() {
                         <Goals
                           odd={line.odd}
                           value={line.value}
-                          setGoals={setGoalsSelected}
-                          goals={goalsSelected}
                           fixtureId={fixtureId}
                           key={index}
                         />
@@ -104,8 +97,6 @@ export default function AllMarkets() {
                         <ExactScores
                           odd={line.odd}
                           value={line.value}
-                          setScore={setScoreSelected}
-                          score={scoreSelected}
                           fixtureId={fixtureId}
                           key={index}
                         />
@@ -143,26 +134,57 @@ const Flex = styled.div`
     color: yellow;
     margin: 10px 0;
   }
+  img {
+    width: 20px;
+  }
 `;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10vw;
+  padding: 8vw;
 `;
 
 const Market = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
   span {
-    margin: 30px 0;
+    color: lightgreen;
+    font-weight: 700;
   }
 `;
 const Block = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin-top: 10px;
   p {
     color: black;
+  }
+`;
+const TeamInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 50vw;
+  img {
+    width: 30px;
+  }
+  font-size: 24px;
+  margin-bottom: 30px;
+`;
+
+const Winner = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 50vw;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  p {
+    color: yellow;
+  }
+  img {
+    width: 20px;
   }
 `;
