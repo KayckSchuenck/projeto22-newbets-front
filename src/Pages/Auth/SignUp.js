@@ -47,7 +47,7 @@ export default function SignUp() {
     );
     promise
       .then(() => {
-        alert("Cadastro efetuado com sucesso");
+        alert("Cadastro efetuado com sucesso,favor confirmar seu email");
         navigate("/login");
       })
       .catch((erro) => {

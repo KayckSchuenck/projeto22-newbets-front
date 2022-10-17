@@ -33,7 +33,10 @@ function App() {
         alert("Aposta efetuada com sucesso");
         setAvailableAmount(res.data.availableMoney);
       })
-      .catch((erro) => console.log(erro));
+      .catch((error) => {
+        console.log(error);
+        alert(error.message);
+      });
   }
 
   const userContext = {
