@@ -43,9 +43,15 @@ export default function AllMarkets() {
     <>
       <Container>
         <TeamInfo>
-          <img src={homeLogo} />
-          <span>{home}</span>X<span>{away}</span>
-          <img src={awayLogo} />
+          <OnlyToFlex>
+            <img src={homeLogo} />
+            <span>{home}</span>{" "}
+          </OnlyToFlex>
+          <span>X</span>
+          <OnlyToFlex>
+            <span>{away}</span>
+            <img src={awayLogo} />
+          </OnlyToFlex>
         </TeamInfo>
         {oddsData ? (
           oddsData.map((elem) => {
@@ -129,7 +135,7 @@ export default function AllMarkets() {
 const Flex = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 50vw;
+  width: 60vw;
   p {
     color: yellow;
     margin: 10px 0;
@@ -157,21 +163,29 @@ const Market = styled.div`
 `;
 const Block = styled.div`
   display: flex;
-  flex-wrap: wrap;
   margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 10px;
+  column-gap: 10px;
   p {
-    color: black;
+    color: yellow;
   }
 `;
 const TeamInfo = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 50vw;
+  align-items: center;
+  width: 400px;
+  font-size: 24px;
+  margin-bottom: 30px;
   img {
     width: 30px;
   }
-  font-size: 24px;
-  margin-bottom: 30px;
+  @media (max-width: 500px) {
+    width: 345px;
+    font-size: 22px;
+  }
 `;
 
 const Winner = styled.div`
@@ -187,4 +201,9 @@ const Winner = styled.div`
   img {
     width: 20px;
   }
+`;
+
+const OnlyToFlex = styled.div`
+  display: flex;
+  align-items: center;
 `;

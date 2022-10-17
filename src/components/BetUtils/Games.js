@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useContext } from "react";
 import UserContext from "../Context/userContext";
@@ -16,11 +16,13 @@ export default function Games({
   const [amount, setAmount] = useState(0);
   const [selectedHome, setSelectedHome] = useState();
   const [selectedAway, setSelectedAway] = useState();
-  const { postBet } = useContext(UserContext);
+  const { postBet, token } = useContext(UserContext);
   const link = `/markets/${fixtureId}`;
+  const navigate = useNavigate();
 
   function handleBetHome(e) {
     e.preventDefault();
+    setSelectedHome();
 
     const userBet = {
       amount,
@@ -29,8 +31,12 @@ export default function Games({
       value: "home",
     };
 
-    postBet(userBet, "options");
-    setSelectedHome();
+    if (!token) {
+      alert("Por favor efetue seu login");
+      navigate("/login");
+    } else {
+      postBet(userBet, "options");
+    }
   }
 
   function handleBetAway(e) {
@@ -169,6 +175,9 @@ export const BetFlex = styled.div`
   margin-top: 5px;
   span {
     color: black;
+  }
+  input {
+    margin-right: 5px;
   }
 `;
 

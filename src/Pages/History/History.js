@@ -30,6 +30,7 @@ export default function History() {
   useEffect(() => {
     fetchData();
   }, [token]);
+  console.log(historyData);
 
   return !historyData ? (
     <Loading>
@@ -44,7 +45,7 @@ export default function History() {
         visible={true}
       />
     </Loading>
-  ) : !historyData.lenght ? (
+  ) : historyData.lenght === 0 ? (
     <>
       <NoRegisters>
         <p> Não há registros ainda.</p>

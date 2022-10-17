@@ -30,12 +30,6 @@ export default function SignUp() {
   const [postForm, setPostForm] = useState(clearSignUpInputs);
 
   function handleForm(e) {
-    if (e.target.name === "cpf") {
-      setPostForm({
-        ...postForm,
-        [e.target.name]: cpfMask(e),
-      });
-    }
     setPostForm({
       ...postForm,
       [e.target.name]: e.target.value,
@@ -105,7 +99,7 @@ export default function SignUp() {
         />
         <input
           type="text"
-          placeholder="CPF"
+          placeholder="12345678900"
           name="cpf"
           maxLength={14}
           value={postForm.cpf}

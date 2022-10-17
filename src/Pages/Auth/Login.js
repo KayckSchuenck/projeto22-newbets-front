@@ -28,11 +28,12 @@ export default function Login() {
   function handleLoginSubmit(e) {
     e.preventDefault();
     setLoading(true);
+    setPostForm(clearLoginInputs);
+
     const loginPost = {
       email: postForm.email,
       password: postForm.password,
     };
-    setPostForm(clearLoginInputs);
 
     axios
       .post(`${process.env.REACT_APP_API_BASE_URL}/login`, loginPost)
@@ -163,12 +164,4 @@ export const Slogan = styled.div`
   @media (max-width: 708px) {
     width: 75vw;
   }
-`;
-
-const Flex = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 100px;
 `;

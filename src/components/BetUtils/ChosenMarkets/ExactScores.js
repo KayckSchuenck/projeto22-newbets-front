@@ -1,12 +1,14 @@
 import { useState, useContext } from "react";
-import styled from "styled-components";
-import { BetFlex, Form } from "../Games";
+import { BetFlex } from "../Games";
 import UserContext from "../../Context/userContext";
+import { Container, Form, Button } from "./Goals";
+import { useNavigate } from "react-router-dom";
 
-export default function ExactScore({ odd, value, setScore, score, fixtureId }) {
-  const { postBet } = useContext(UserContext);
-  const [amount, setAmount] = useState();
+export default function ExactScore({ odd, value, fixtureId }) {
+  const { postBet, token } = useContext(UserContext);
+  const [amount, setAmount] = useState(0);
   const [selected, setSelected] = useState(false);
+  const navigate = useNavigate();
 
   const values = value.split(":");
   const scoreHome = values[0];
@@ -14,6 +16,7 @@ export default function ExactScore({ odd, value, setScore, score, fixtureId }) {
 
   function handleBetScores(e) {
     e.preventDefault();
+    setSelected();
 
     const userBet = {
       amount,
@@ -23,14 +26,18 @@ export default function ExactScore({ odd, value, setScore, score, fixtureId }) {
       scoreAway,
     };
 
-    postBet(userBet, "scores");
-    setSelected();
+    if (!token) {
+      alert("Por favor efetue seu login");
+      navigate("/login");
+    } else {
+      postBet(userBet, "scores");
+    }
   }
   return (
-    <>
-      <Button>
-        <p>{value}</p>
-        <p onClick={() => setSelected(!selected)}>{odd}</p>
+    <Container>
+      <Button onClick={() => setSelected(!selected)}>
+        <h1>{value}</h1>
+        <p>{odd}</p>
       </Button>
       {selected ? (
         <Form onSubmit={handleBetScores}>
@@ -50,11 +57,6 @@ export default function ExactScore({ odd, value, setScore, score, fixtureId }) {
       ) : (
         <></>
       )}
-    </>
+    </Container>
   );
 }
-
-const Button = styled.button`
-  width: 20vw;
-  background-color: #e4e4e4;
-`;

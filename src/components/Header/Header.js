@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../Context/userContext";
 import { HiOutlineLogout } from "react-icons/hi";
@@ -12,7 +12,7 @@ import {
 export default function Header() {
   const { setAvailableAmount, setName, setToken, name, availableAmount } =
     useContext(UserContext);
-
+  const navigate = useNavigate();
   const [selected, setSelected] = useState(false);
 
   function logout() {
@@ -20,6 +20,7 @@ export default function Header() {
     setName();
     setToken();
     setAvailableAmount();
+    navigate("/");
   }
 
   return name && availableAmount !== undefined ? (

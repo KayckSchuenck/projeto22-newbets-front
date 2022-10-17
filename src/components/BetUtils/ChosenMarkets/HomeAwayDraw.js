@@ -1,15 +1,18 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../../Context/userContext";
 import { BetFlex, Form } from "../Games";
 
 export default function HomeAwayDraw({ odd, value, fixtureId }) {
-  const { postBet } = useContext(UserContext);
+  const { postBet, token } = useContext(UserContext);
   const [amount, setAmount] = useState(0);
   const [selected, setSelected] = useState(false);
+  const navigate = useNavigate();
 
   function handleBetWinner(e) {
     e.preventDefault();
+    setSelected();
 
     const userBet = {
       amount,
@@ -18,8 +21,12 @@ export default function HomeAwayDraw({ odd, value, fixtureId }) {
       value,
     };
 
-    postBet(userBet, "options");
-    setSelected();
+    if (!token) {
+      alert("Por favor efetue seu login");
+      navigate("/login");
+    } else {
+      postBet(userBet, "options");
+    }
   }
   return (
     <>
@@ -39,7 +46,7 @@ export default function HomeAwayDraw({ odd, value, fixtureId }) {
                 required
                 onChange={(e) => setAmount(e.target.value)}
               />
-              <span>Retorno esperado={(amount * odd).toFixed(2)}</span>
+              <span>Retorno esperado: {(amount * odd).toFixed(2)}</span>
             </BetFlex>
             <button type="submit">Faça já sua aposta</button>
           </Form>
@@ -71,7 +78,7 @@ const Block = styled.button`
   margin-bottom: 10px;
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import Login from "./Pages/Auth/Login";
 import SignUp from "./Pages/Auth/SignUp";
@@ -18,27 +18,22 @@ function App() {
   const [availableAmount, setAvailableAmount] = useState();
 
   function postBet(userBet, route) {
-    if (!token) {
-      alert("Por favor efetue seu login");
-      <Navigate to="/login" />;
-    } else {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      axios
-        .post(
-          `${process.env.REACT_APP_API_BASE_URL}/bets/${route}`,
-          userBet,
-          config
-        )
-        .then((res) => {
-          alert("Aposta efetuada com sucesso");
-          setAvailableAmount(res.data.availableMoney);
-        })
-        .catch((erro) => console.log(erro));
-    }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .post(
+        `${process.env.REACT_APP_API_BASE_URL}/bets/${route}`,
+        userBet,
+        config
+      )
+      .then((res) => {
+        alert("Aposta efetuada com sucesso");
+        setAvailableAmount(res.data.availableMoney);
+      })
+      .catch((erro) => console.log(erro));
   }
 
   const userContext = {
