@@ -3,8 +3,30 @@ import axios from "axios";
 import styled from "styled-components";
 import Country from "../../components/BetUtils/Country";
 import { TailSpin } from "react-loader-spinner";
+import Cards from "react-credit-cards";
+import "react-credit-cards/es/styles-compiled.css";
 
 export default function Main() {
+  const [cardForm, setCardForm] = useState(clearCardInputs);
+
+  function clearCardInputs() {
+    return {
+      cvc: "",
+      expiry: "",
+      focus: "",
+      name: "",
+      number: "",
+    };
+  }
+
+  function handleInputFocus(e) {
+    setCardForm({ ...cardForm, focus: e.target.name });
+  }
+
+  function handleInputChange(e) {
+    const { name, value } = e.target;
+    setCardForm({ ...cardForm, [name]: value });
+  }
   const [leagueData, setLeagueData] = useState();
   async function fetchData() {
     const config = {
@@ -60,6 +82,50 @@ export default function Main() {
     </Loading>
   ) : (
     <Block>
+      <CreditCard>
+        <Cards
+          cvc={cardForm.cvc}
+          expiry={cardForm.expiry}
+          focused={cardForm.focus}
+          name={cardForm.name}
+          number={cardForm.number}
+        />
+        <Form>
+          <div>
+            <input
+              type="number"
+              name="number"
+              placeholder="Card Number"
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
+            />
+            <p>E.g.:49..., 51..., 36..., 27...</p>
+          </div>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+          />
+          <Flex>
+            <input
+              type="number"
+              name="expiry"
+              placeholder="Valid Thru"
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
+            />
+            <input
+              type="text"
+              name="cvc"
+              placeholder="CVC"
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
+            />
+          </Flex>
+        </Form>
+      </CreditCard>
       {leagueData.map((country, index) => (
         <Country
           name={country.name}
@@ -87,4 +153,43 @@ export const Loading = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 100px;
+`;
+
+const CreditCard = styled.div`
+  display: flex;
+  align-items: center;
+  height: 225px;
+  padding: 15px;
+  color: #8e8e8e;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 180px;
+  margin-left: 25px;
+  input {
+    width: 300px;
+    border-radius: 5px;
+    height: 42px;
+    padding: 0 10px;
+    font-size: 18px;
+    color: #8e8e8e;
+  }
+  p {
+    font-size: 15px;
+    margin-top: 5px;
+  }
+`;
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 300px;
+  input {
+    width: 146px;
+  }
 `;

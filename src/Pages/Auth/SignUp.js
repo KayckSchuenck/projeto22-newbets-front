@@ -9,14 +9,6 @@ export default function SignUp() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  function cpfMask(value) {
-    value = value.replace(/\D/g, "");
-    value = value.replace(/(\d{3})(\d)/, "$1.$2");
-    value = value.replace(/(\d{3})(\d)/, "$1.$2");
-    value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-    return value;
-  }
-
   function clearSignUpInputs() {
     return {
       email: "",
@@ -30,9 +22,10 @@ export default function SignUp() {
   const [postForm, setPostForm] = useState(clearSignUpInputs);
 
   function handleForm(e) {
+    const { name, value } = e.target;
     setPostForm({
       ...postForm,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   }
 
