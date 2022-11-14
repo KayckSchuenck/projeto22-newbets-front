@@ -19,7 +19,7 @@ export default createGlobalStyle`
     }
     html, body, #root {
         background-color:#585858;
-        font-family: 'Cantarell', sans-serif;
+        font-family: 'Lato', sans-serif;
     }
     
 `;
