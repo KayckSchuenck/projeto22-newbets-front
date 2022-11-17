@@ -20,6 +20,28 @@ export default createGlobalStyle`
     html, body, #root {
         background-color:#585858;
         font-family: 'Lato', sans-serif;
+        h1 {
+        color: black;
+        font-weight: 700;
+        font-size: 17px;
+        margin-top: 0;
+        @media (max-width:673px){
+            font-size:15px
+        }
+        }
+        
     }
-    
+    body::-webkit-scrollbar {
+        width: 10px;               
+    }
+
+    body::-webkit-scrollbar-track {
+        background: #012901;   
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background-color: gray;    
+        border-radius: 20px;      
+        border: 3px solid grey;  
+    }
 `;

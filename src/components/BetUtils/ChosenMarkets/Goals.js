@@ -72,14 +72,12 @@ export const Button = styled.button`
   border-radius: 5px;
   width: 12vw;
   height: 18vh;
-  font-size: 18px;
   padding: 15px 10px;
   margin-bottom: 10px;
-  h1 {
-    color: black;
-    font-weight: 700;
-    font-size: 17px;
-    margin-top: 0;
+  font-size: 18px;
+  @media (max-width:673px){
+    font-size: 15px;
+    padding:15px 5px
   }
 `;
 
@@ -98,7 +96,7 @@ export const Form = styled.form`
   background-color: #e4e4e4;
   margin-bottom: 10px;
   border-radius: 5px;
-  width: 60vw;
+  width: 50vw;
   input {
     background-color: rgba(0, 0, 0, 0);
     border: solid 1px #367a65;
@@ -121,7 +119,7 @@ export const Form = styled.form`
     width: 175px;
   }
   span {
-    color: #64a964;
+    color: darkgreen;
     font-weight: 700;
   }
 `;

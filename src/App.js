@@ -11,6 +11,7 @@ import Header from "./components/Header/Header";
 import PersistRoute from "./components/Routes/PersistRoute";
 import History from "./Pages/History/History";
 import axios from "axios";
+import LoginRedirect from "./components/Routes/LoginRedirect";
 
 function App() {
   const [token, setToken] = useState();
@@ -55,7 +56,11 @@ function App() {
       <UserContext.Provider value={userContext}>
         <Header />
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route
+            element={<LoginRedirect auth={localStorage.getItem("isLogged")} />}
+          >
+            <Route path="/login" element={<Login />} />
+          </Route>
           <Route path="/sign-up" element={<SignUp />} />
           <Route
             element={<PersistRoute auth={localStorage.getItem("isLogged")} />}

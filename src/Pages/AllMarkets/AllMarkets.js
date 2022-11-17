@@ -45,7 +45,7 @@ export default function AllMarkets() {
         <TeamInfo>
           <OnlyToFlex>
             <img src={homeLogo} />
-            <span>{home}</span>{" "}
+            <span>{home}</span>
           </OnlyToFlex>
           <span>X</span>
           <OnlyToFlex>
@@ -58,7 +58,7 @@ export default function AllMarkets() {
             if (elem.id === 1) {
               return (
                 <Market>
-                  <span>{elem.name}</span>
+                  <h2>{elem.name}</h2>
                   <Winner>
                     {elem.values.map((line, index) => (
                       <HomeAwayDraw
@@ -76,7 +76,7 @@ export default function AllMarkets() {
             if (elem.id === 5) {
               return (
                 <Market>
-                  <span>{elem.name}</span>
+                  <h2>{elem.name}</h2>
                   <Flex>
                     <Block>
                       {elem.values.map((line, index) => (
@@ -96,7 +96,7 @@ export default function AllMarkets() {
             if (elem.id === 10) {
               return (
                 <Market>
-                  <span>{elem.name}</span>
+                  <h2>{elem.name}</h2>
                   <Flex>
                     <Block>
                       {elem.values.map((line, index) => (
@@ -149,6 +149,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 8vw;
+  
 `;
 
 const Market = styled.div`
@@ -156,21 +157,21 @@ const Market = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
-  span {
+  width: 100%;
+  h2{
     color: lightgreen;
     font-weight: 700;
   }
+  
 `;
 const Block = styled.div`
   display: flex;
   margin-top: 10px;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: flex-start;
   row-gap: 10px;
   column-gap: 10px;
-  p {
-    color: yellow;
-  }
 `;
 const TeamInfo = styled.div`
   display: flex;
@@ -184,7 +185,7 @@ const TeamInfo = styled.div`
   }
   @media (max-width: 500px) {
     width: 345px;
-    font-size: 22px;
+    font-size: 21px;
   }
 `;
 
@@ -206,4 +207,7 @@ const Winner = styled.div`
 const OnlyToFlex = styled.div`
   display: flex;
   align-items: center;
+  span{
+    margin:0 5px
+  }
 `;

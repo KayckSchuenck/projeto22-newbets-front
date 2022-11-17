@@ -69,13 +69,11 @@ const Block = styled.button`
   height: 18vh;
   font-size: 18px;
   padding: 20px 10px;
-  h1 {
-    color: black;
-    font-weight: 700;
-    font-size: 17px;
-    margin-top: 0;
-  }
   margin-bottom: 10px;
+  @media (max-width:673px) {
+    font-size: 15px;
+    padding:20px 5px;
+  }
 `;
 
 export const Container = styled.div`

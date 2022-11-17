@@ -9,6 +9,7 @@ export default function Login() {
   const navigate = useNavigate();
   const { setToken, setName, setAvailableAmount } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState(false)
 
   function clearLoginInputs() {
     return {
@@ -29,7 +30,7 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     setPostForm(clearLoginInputs);
-
+    setLoginError(false)
     const loginPost = {
       email: postForm.email,
       password: postForm.password,
@@ -51,7 +52,7 @@ export default function Login() {
         navigate(-1);
       })
       .catch((error) => {
-        console.log(error);
+        setLoginError(true)
         setLoading(false);
       });
   }
@@ -87,7 +88,9 @@ export default function Login() {
         <Link to="/sign-up">
           Faça seu cadastro agora e receba R$ 20,00 de bonus
         </Link>
+        {loginError ? <span>Erro ao fazer seu login, tente novamente</span> : <></>}
       </Form>
+
     </Container>
   );
 }
@@ -96,6 +99,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 `;
 
 export const Form = styled.form`
@@ -108,6 +112,11 @@ export const Form = styled.form`
   width: 55vw;
   border-radius: 5px;
   padding: 10px;
+  span{
+    color:red;
+    margin-top:10px;
+    font-size: 22px;
+  }
   input,
   button {
     font-size: 15px;

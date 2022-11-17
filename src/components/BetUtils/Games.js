@@ -211,7 +211,7 @@ export const Form = styled.form`
     width: 175px;
   }
   span {
-    color: #64a964;
+    color: darkgreen;
     font-weight: 700;
   }
 `;

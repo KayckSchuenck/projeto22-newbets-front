@@ -3,8 +3,6 @@ import axios from "axios";
 import styled from "styled-components";
 import Country from "../../components/BetUtils/Country";
 import { TailSpin } from "react-loader-spinner";
-import Cards from "react-credit-cards";
-import "react-credit-cards/es/styles-compiled.css";
 
 export default function Main() {
   const [leagueData, setLeagueData] = useState();
@@ -90,4 +88,3 @@ export const Loading = styled.div`
   justify-content: center;
   margin-top: 100px;
 `;
-
