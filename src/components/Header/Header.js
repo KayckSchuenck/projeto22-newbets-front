@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../Context/userContext";
 import { HiOutlineLogout } from "react-icons/hi";

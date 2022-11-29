@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm i --legacy-peer-deps
+RUN npm i
 RUN npm run build
 
 RUN mkdir -p /var/www/html

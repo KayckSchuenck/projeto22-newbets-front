@@ -44,13 +44,13 @@ export default function AllMarkets() {
       <Container>
         <TeamInfo>
           <OnlyToFlex>
-            <img src={homeLogo} />
+            <img src={homeLogo} alt={'logo'} />
             <span>{home}</span>
           </OnlyToFlex>
           <span>X</span>
           <OnlyToFlex>
             <span>{away}</span>
-            <img src={awayLogo} />
+            <img src={awayLogo} alt={'logoAway'} />
           </OnlyToFlex>
         </TeamInfo>
         {oddsData ? (
