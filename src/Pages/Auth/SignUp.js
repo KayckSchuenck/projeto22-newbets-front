@@ -44,8 +44,7 @@ export default function SignUp() {
         navigate("/login");
       })
       .catch((erro) => {
-        console.log(erro);
-        alert(`${erro.response.data}`);
+        alert(`Erro ao efetuar seu cadastro, por favor tente novamente`);
         setLoading(false);
       });
   }
